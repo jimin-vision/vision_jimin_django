@@ -1,0 +1,55 @@
+{% extends "blog/base.html" %}
+{% block title %}Contact - Portfolio{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+  <h1 class="h3 fw-semibold mb-2">Contact</h1>
+  <p class="muted mb-0">아래 채널로 연락 주세요. (placeholder)</p>
+</section>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="surface p-4 h-100">
+      <div class="small muted mb-1">Email</div>
+      <div class="fw-semibold">[email Placeholder]</div>
+      <a class="small" href="mailto:[email Placeholder]">Send email</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="surface p-4 h-100">
+      <div class="small muted mb-1">GitHub</div>
+      <div class="fw-semibold">[GitHub Placeholder]</div>
+      <a class="small" href="[GitHub URL Placeholder]" target="_blank" rel="noopener">Open GitHub</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="surface p-4 h-100">
+      <div class="small muted mb-1">Resume</div>
+      <div class="fw-semibold">[Resume Placeholder]</div>
+      <a class="small" href="[Resume URL Placeholder]" target="_blank" rel="noopener">Open Resume</a>
+    </div>
+  </div>
+</div>
+
+<section class="surface p-4">
+  <h2 class="h5 fw-semibold mb-3">Message (UI only)</h2>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input class="form-control" type="text" placeholder="[placeholder]">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input class="form-control" type="email" placeholder="[placeholder]">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Message</label>
+      <textarea class="form-control" rows="5" placeholder="[placeholder]"></textarea>
+    </div>
+    <button class="btn btn-primary" type="button" disabled>
+      Submit (placeholder)
+    </button>
+    <div class="small muted mt-2">※ 실제 전송 로직은 추후 구현 (placeholder)</div>
+  </form>
+</section>
+{% endblock %}

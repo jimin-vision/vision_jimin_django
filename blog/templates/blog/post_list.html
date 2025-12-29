@@ -1,0 +1,92 @@
+{% extends "blog/base.html" %}
+{% block title %}Projects - Portfolio{% endblock %}
+
+{% block hero %}
+<header class="container py-4 py-lg-5">
+  <div class="hero p-4 p-lg-5">
+    <div class="row g-3 align-items-center">
+      <div class="col-lg-8">
+        <h1 class="mb-2" style="font-size:32px; line-height:1.2; font-weight:700;">
+          [이름 Placeholder] · [직무 Placeholder]
+        </h1>
+        <p class="mb-3 muted">
+          30초 요약: [주요 분야 Placeholder] / [대표 기술 3개 Placeholder] / [최근 프로젝트 한 줄 Placeholder]
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="{% url 'contact' %}">Contact</a>
+          <a class="btn btn-outline-primary" href="[Resume URL Placeholder]" target="_blank" rel="noopener">Resume</a>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="surface p-3">
+          <div class="small muted mb-1">Core Stack</div>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge badge-min rounded-pill">Python</span>
+            <span class="badge badge-min rounded-pill">Django</span>
+            <span class="badge badge-min rounded-pill">Bootstrap</span>
+            <span class="badge badge-min rounded-pill">[추가 Placeholder]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<section class="d-flex align-items-end justify-content-between gap-3 mb-3">
+  <div>
+    <h2 class="h4 mb-1 fw-semibold">Projects</h2>
+    <div class="small muted">정리된 프로젝트/글 목록 (placeholder)</div>
+  </div>
+
+  <!-- (선택) 검색 UI 자리만 확보: 동작은 나중에 -->
+  <form class="d-flex gap-2" method="get" action="">
+    <input class="form-control form-control-sm" type="search" name="q" placeholder="Search (placeholder)" aria-label="Search">
+    <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
+  </form>
+</section>
+
+<div class="row g-3">
+  {% for post in posts %}
+  <div class="col-12 col-md-6 col-lg-4">
+    <article class="card card-min h-100">
+      <div class="card-body d-flex flex-column">
+        <header class="mb-2">
+          <h3 class="h5 fw-semibold mb-1">{{ post.title }}</h3>
+          <div class="small muted">{{ post.created_at|date:"Y.m.d" }}</div>
+        </header>
+
+        <!-- 요약: content에서 일부만 보여주는게 이상적이지만, 일단 placeholder 처리 -->
+        <p class="mb-3">
+          <span class="muted">[요약 Placeholder]</span>
+          <!-- 예: {{ post.content|striptags|truncatechars:120 }} -->
+        </p>
+
+        <!-- 태그(기술 스택) - DB 없으면 placeholder로 -->
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="badge badge-min rounded-pill">[Tag Placeholder]</span>
+          <span class="badge badge-min rounded-pill">[Tag Placeholder]</span>
+          <span class="badge badge-min rounded-pill">[Tag Placeholder]</span>
+        </div>
+
+        <div class="mt-auto d-flex gap-2">
+          <a class="btn btn-primary btn-sm" href="#" aria-label="View details">View</a>
+          <a class="btn btn-outline-primary btn-sm" href="[Live URL Placeholder]" target="_blank" rel="noopener">
+            Live
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="surface p-4">
+      <div class="fw-semibold mb-1">아직 게시물이 없습니다.</div>
+      <div class="muted small">/admin 에서 첫 글(프로젝트)을 작성하세요.</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <title>{% block title %}Portfolio Blog{% endblock %}</title>
+
+  <style>
+    :root{
+      --c-bg:#ffffff;
+      --c-surface:#ffffff;
+      --c-text:#0b0f19;
+      --c-muted:#667085;
+      --c-border:#e6e8ec;
+      --c-accent:#2563eb; /* 포인트 컬러 1개(원하면 이 값만 변경) */
+      --c-focus: rgba(37,99,235,.25);
+
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+
+      --shadow-sm: 0 1px 2px rgba(16,24,40,.06);
+      --shadow-md: 0 6px 18px rgba(16,24,40,.08);
+    }
+
+    /* Bootstrap 변수 오버라이드(핵심) */
+    body{
+      --bs-body-bg: var(--c-bg);
+      --bs-body-color: var(--c-text);
+      --bs-border-color: var(--c-border);
+      --bs-primary: var(--c-accent);
+      --bs-link-color: var(--c-accent);
+      --bs-link-hover-color: #1d4ed8;
+      font-size: 16px;
+      line-height: 1.6;
+      letter-spacing: -0.01em;
+    }
+
+    /* 공통 컴포넌트 유틸 */
+    .app-shell { min-height: 100vh; display:flex; flex-direction:column; }
+    .app-main { flex:1; }
+    .surface { background: var(--c-surface); border:1px solid var(--c-border); border-radius: var(--r-lg); }
+    .muted { color: var(--c-muted); }
+
+    .nav-link { color: var(--c-text); }
+    .nav-link:hover { color: var(--c-accent); }
+
+    /* 접근성: 포커스 링 */
+    :focus-visible { outline: 0; box-shadow: 0 0 0 .25rem var(--c-focus); border-radius: 8px; }
+
+    /* 카드(프로젝트/포스트) */
+    .card-min {
+      border: 1px solid var(--c-border);
+      border-radius: var(--r-lg);
+      box-shadow: none;
+    }
+    .card-min:hover { box-shadow: var(--shadow-sm); }
+
+    /* 배지 */
+    .badge-min{
+      border:1px solid var(--c-border);
+      background: #fff;
+      color: var(--c-text);
+      font-weight: 500;
+    }
+
+    /* 히어로 */
+    .hero{
+      border:1px solid var(--c-border);
+      border-radius: var(--r-lg);
+      background: #fff;
+      box-shadow: none;
+    }
+  </style>
+</head>
+
+<body>
+<div class="app-shell">
+
+  <!-- Header / Navigation -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom">
+    <div class="container py-2">
+      <a class="navbar-brand fw-semibold" href="{% url 'post_list' %}">
+        <span class="me-2">●</span> <span>[이름 Placeholder]</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="topNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+
+        <!-- Right CTA (placeholder) -->
+        <div class="d-flex gap-2">
+          <a class="btn btn-outline-primary btn-sm" href="[GitHub URL Placeholder]" target="_blank" rel="noopener">
+            GitHub
+          </a>
+          <a class="btn btn-primary btn-sm" href="{% url 'contact' %}">
+            Hire / Contact
+          </a>
+          <a class="btn btn-outline-dark btn-sm" href="/admin/">Admin</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Optional hero block (홈에서만 사용 권장) -->
+  {% block hero %}{% endblock %}
+
+  <!-- Main -->
+  <main class="app-main">
+    <div class="container py-4 py-lg-5">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-top bg-white">
+    <div class="container py-4 d-flex flex-column flex-md-row justify-content-between gap-2">
+      <div class="small muted">© {% now "Y" %} [이름 Placeholder]. All rights reserved.</div>
+      <div class="small muted">
+        <span class="me-2">Django</span><span class="me-2">·</span><span>Bootstrap</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
