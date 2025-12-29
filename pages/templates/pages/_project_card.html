@@ -2,7 +2,32 @@
   <div class="surface h-100 p-4 d-flex flex-column">
     <div class="small text-uppercase text-secondary mb-2">프로젝트(Project)</div>
     <h3 class="h5 fw-bold mb-2">{{ project.name }}</h3>
-    <p class="text-secondary flex-grow-1">{{ project.summary }}</p>
+    <div class="flex-grow-1">
+      <p class="text-secondary mb-3">{{ project.summary }}</p>
+      {% if show_detail and project.details %}
+        <div class="mb-3">
+          <div class="small text-secondary mb-2">프로젝트 설명(Detail)</div>
+          <ul class="small text-secondary mb-0 ps-3">
+            {% for line in project.details %}
+              <li>{{ line }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if show_detail and project.highlights %}
+        <div class="mb-3">
+          <div class="small text-secondary mb-2">사용 기술 5줄 요약</div>
+          <ul class="small text-secondary mb-0 ps-3">
+            {% for line in project.highlights %}
+              <li>{{ line }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      {% if show_detail and project.note %}
+        <div class="small text-secondary mb-3">{{ project.note }}</div>
+      {% endif %}
+    </div>
     <div class="mb-3">
       <div class="small text-secondary mb-2">기술 스택(Tech Stack)</div>
       <div class="d-flex flex-wrap gap-2">

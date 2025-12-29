@@ -12,25 +12,24 @@
   <div class="col-md-4">
     <div class="surface p-4 h-100">
       <div class="small text-secondary">이메일(Email)</div>
-      <div class="fw-semibold mb-3">{{ profile.email }}</div>
-      <a class="btn btn-sm btn-outline-primary" href="{{ profile.email_link }}">메일 보내기(Send)</a>
+      {% if profile.email %}
+        <div class="fw-semibold mb-3">{{ profile.email }}</div>
+        <a class="btn btn-sm btn-outline-primary" href="{{ profile.email_link }}">메일 보내기(Send)</a>
+      {% else %}
+        <div class="fw-semibold mb-0">준비중</div>
+      {% endif %}
     </div>
   </div>
   <div class="col-md-4">
     <div class="surface p-4 h-100">
       <div class="small text-secondary">깃헙(GitHub)</div>
-      <div class="fw-semibold mb-3">{{ profile.github }}</div>
-      <a class="btn btn-sm btn-outline-primary" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙 열기(Open)</a>
+      {% if profile.github %}
+        <div class="fw-semibold mb-3">{{ profile.github }}</div>
+        <a class="btn btn-sm btn-outline-primary" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙 열기(Open)</a>
+      {% else %}
+        <div class="fw-semibold mb-0">준비중</div>
+      {% endif %}
     </div>
   </div>
-  {% if profile.resume_link %}
-  <div class="col-md-4">
-    <div class="surface p-4 h-100">
-      <div class="small text-secondary">이력서(Resume)</div>
-      <div class="fw-semibold mb-3">링크(Link)</div>
-      <a class="btn btn-sm btn-outline-primary" href="{{ profile.resume_link }}" target="_blank" rel="noopener">이력서 보기(View)</a>
-    </div>
-  </div>
-  {% endif %}
 </div>
 {% endblock %}

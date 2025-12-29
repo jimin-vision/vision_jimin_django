@@ -10,7 +10,7 @@
 
 <div class="row row-cols-1 row-cols-md-2 g-3 stagger">
   {% for project in projects %}
-    {% include "pages/_project_card.html" with project=project %}
+    {% include "pages/_project_card.html" with project=project show_detail=True %}
   {% empty %}
     <div class="col">
       <div class="alert alert-light border">프로젝트(Project)가 아직 없습니다.</div>
