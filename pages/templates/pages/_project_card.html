@@ -1,0 +1,16 @@
+﻿<div class="col">
+  <div class="surface h-100 p-4 d-flex flex-column">
+    <div class="small text-uppercase text-secondary mb-2">프로젝트(Project)</div>
+    <h3 class="h5 fw-bold mb-2">{{ project.name }}</h3>
+    <p class="text-secondary flex-grow-1">{{ project.summary }}</p>
+    <div class="mb-3">
+      <div class="small text-secondary mb-2">기술 스택(Tech Stack)</div>
+      <div class="d-flex flex-wrap gap-2">
+        {% for tech in project.tech_stack %}
+          <span class="badge badge-skill">{{ tech }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <a class="btn btn-sm btn-outline-primary mt-auto" href="{{ project.link }}" target="_blank" rel="noopener">링크(Link)</a>
+  </div>
+</div>

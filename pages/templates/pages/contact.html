@@ -1,55 +1,36 @@
-{% extends "blog/base.html" %}
-{% block title %}Contact - Portfolio{% endblock %}
+﻿{% extends "blog/base.html" %}
+{% block title %}연락(Contact) - 포트폴리오(Portfolio){% endblock %}
 
 {% block content %}
-<section class="mb-4">
-  <h1 class="h3 fw-semibold mb-2">Contact</h1>
-  <p class="muted mb-0">아래 채널로 연락 주세요. (placeholder)</p>
+<section class="mb-4 fade-up">
+  <span class="badge text-bg-light border mb-2">Contact</span>
+  <h1 class="h3 fw-bold mb-2">연락(Contact)</h1>
+  <p class="text-secondary mb-0">빠르게 연결할 수 있는 링크(Link)를 제공합니다.</p>
 </section>
 
-<div class="row g-3 mb-4">
+<div class="row g-3">
   <div class="col-md-4">
     <div class="surface p-4 h-100">
-      <div class="small muted mb-1">Email</div>
-      <div class="fw-semibold">[email Placeholder]</div>
-      <a class="small" href="mailto:[email Placeholder]">Send email</a>
+      <div class="small text-secondary">이메일(Email)</div>
+      <div class="fw-semibold mb-3">{{ profile.email }}</div>
+      <a class="btn btn-sm btn-outline-primary" href="{{ profile.email_link }}">메일 보내기(Send)</a>
     </div>
   </div>
   <div class="col-md-4">
     <div class="surface p-4 h-100">
-      <div class="small muted mb-1">GitHub</div>
-      <div class="fw-semibold">[GitHub Placeholder]</div>
-      <a class="small" href="[GitHub URL Placeholder]" target="_blank" rel="noopener">Open GitHub</a>
+      <div class="small text-secondary">깃헙(GitHub)</div>
+      <div class="fw-semibold mb-3">{{ profile.github }}</div>
+      <a class="btn btn-sm btn-outline-primary" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙 열기(Open)</a>
     </div>
   </div>
+  {% if profile.resume_link %}
   <div class="col-md-4">
     <div class="surface p-4 h-100">
-      <div class="small muted mb-1">Resume</div>
-      <div class="fw-semibold">[Resume Placeholder]</div>
-      <a class="small" href="[Resume URL Placeholder]" target="_blank" rel="noopener">Open Resume</a>
+      <div class="small text-secondary">이력서(Resume)</div>
+      <div class="fw-semibold mb-3">링크(Link)</div>
+      <a class="btn btn-sm btn-outline-primary" href="{{ profile.resume_link }}" target="_blank" rel="noopener">이력서 보기(View)</a>
     </div>
   </div>
+  {% endif %}
 </div>
-
-<section class="surface p-4">
-  <h2 class="h5 fw-semibold mb-3">Message (UI only)</h2>
-  <form>
-    <div class="mb-3">
-      <label class="form-label">Name</label>
-      <input class="form-control" type="text" placeholder="[placeholder]">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      <input class="form-control" type="email" placeholder="[placeholder]">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Message</label>
-      <textarea class="form-control" rows="5" placeholder="[placeholder]"></textarea>
-    </div>
-    <button class="btn btn-primary" type="button" disabled>
-      Submit (placeholder)
-    </button>
-    <div class="small muted mt-2">※ 실제 전송 로직은 추후 구현 (placeholder)</div>
-  </form>
-</section>
 {% endblock %}

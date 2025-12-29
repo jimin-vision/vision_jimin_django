@@ -1,0 +1,63 @@
+﻿{% extends "blog/base.html" %}
+{% block title %}홈(Home) - 포트폴리오(Portfolio){% endblock %}
+
+{% block content %}
+<section class="surface p-4 p-md-5 mb-5 fade-up">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <span class="badge text-bg-light border mb-3">포트폴리오(Portfolio)</span>
+      <h1 class="display-5 fw-bold hero-title mb-3">{{ profile.name }} · {{ profile.headline }}</h1>
+      <p class="text-secondary fs-5 mb-4">{{ profile.summary }}</p>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-primary btn-lg" href="{% url 'projects' %}">프로젝트(Projects)</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{% url 'contact' %}">연락(Contact)</a>
+        {% if profile.resume_link %}
+          <a class="btn btn-outline-dark btn-lg" href="{{ profile.resume_link }}" target="_blank" rel="noopener">이력서(Resume)</a>
+        {% else %}
+          <a class="btn btn-outline-dark btn-lg" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙(GitHub)</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="surface p-4">
+        <h2 class="h6 fw-bold text-secondary mb-3">핵심 역량(Core skills)</h2>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="badge badge-skill">Django</span>
+          <span class="badge badge-skill">Python</span>
+          <span class="badge badge-skill">Bootstrap</span>
+          <span class="badge badge-skill">SQLite</span>
+        </div>
+        <div class="small text-secondary">실제 구현 중심으로 기능(Feature)과 동선(Flow)을 정리합니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mb-5">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="h4 fw-bold mb-0">프로젝트(Projects)</h2>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'projects' %}">전체 보기(View all)</a>
+  </div>
+  <div class="row row-cols-1 row-cols-md-2 g-3 stagger">
+    {% for project in projects|slice:":2" %}
+      {% include "pages/_project_card.html" with project=project %}
+    {% empty %}
+      <div class="col">
+        <div class="alert alert-light border">프로젝트(Project)가 아직 없습니다.</div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="surface p-4 p-md-5">
+  <div class="row g-3 align-items-center">
+    <div class="col-md-8">
+      <h2 class="h4 fw-bold mb-2">블로그(Blog)에서 진행 과정을 확인하세요</h2>
+      <p class="text-secondary mb-0">학습 기록과 문제 해결 과정을 정리해 두었습니다.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+      <a class="btn btn-outline-dark" href="{% url 'post_list' %}">블로그(Blog) 보기</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

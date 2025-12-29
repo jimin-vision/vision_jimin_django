@@ -1,0 +1,20 @@
+﻿{% extends "blog/base.html" %}
+{% block title %}프로젝트(Projects) - 포트폴리오(Portfolio){% endblock %}
+
+{% block content %}
+<section class="mb-4 fade-up">
+  <span class="badge text-bg-light border mb-2">Work</span>
+  <h1 class="h3 fw-bold mb-2">프로젝트(Projects)</h1>
+  <p class="text-secondary mb-0">프로젝트(Project)별 목표, 기능, 기술 스택(Tech Stack)을 요약했습니다.</p>
+</section>
+
+<div class="row row-cols-1 row-cols-md-2 g-3 stagger">
+  {% for project in projects %}
+    {% include "pages/_project_card.html" with project=project %}
+  {% empty %}
+    <div class="col">
+      <div class="alert alert-light border">프로젝트(Project)가 아직 없습니다.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
