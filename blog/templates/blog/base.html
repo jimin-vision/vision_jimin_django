@@ -58,6 +58,27 @@
     .navbar .nav-link:hover {
       color: var(--ink);
     }
+    .nav-icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 12px;
+      height: 40px;
+      border-radius: 12px;
+      background: transparent;
+    }
+    .nav-icon-link:hover {
+      background: #f1f5f9;
+    }
+    .nav-emoji {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .nav-label {
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
     .badge-skill {
       background: #f1f5f9;
       color: var(--ink);
@@ -66,6 +87,22 @@
     }
     .hero-title {
       letter-spacing: -0.02em;
+    }
+    .chart-track {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .chart-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .chart-fill.accent {
+      background: linear-gradient(90deg, var(--accent), #38bdf8);
+    }
+    .chart-fill.accent-2 {
+      background: linear-gradient(90deg, var(--accent-2), #86efac);
     }
     .fade-up {
       animation: fadeUp 0.7s ease both;
@@ -94,14 +131,42 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">홈(Home)</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'projects' %}">프로젝트(Projects)</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">블로그(Blog)</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">소개(About)</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">연락(Contact)</a></li>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
+          <li class="nav-item">
+            <a class="nav-link nav-icon-link" href="{% url 'home' %}" title="홈(Home)">
+              <span class="nav-emoji" aria-hidden="true">🏠</span>
+              <span class="nav-label">홈(Home)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-link" href="{% url 'projects' %}" title="프로젝트(Projects)">
+              <span class="nav-emoji" aria-hidden="true">🗂️</span>
+              <span class="nav-label">프로젝트(Projects)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-link" href="{% url 'post_list' %}" title="블로그(Blog)">
+              <span class="nav-emoji" aria-hidden="true">📝</span>
+              <span class="nav-label">블로그(Blog)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-link" href="{% url 'about' %}" title="소개(About)">
+              <span class="nav-emoji" aria-hidden="true">👋</span>
+              <span class="nav-label">소개(About)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-icon-link" href="{% url 'contact' %}" title="연락(Contact)">
+              <span class="nav-emoji" aria-hidden="true">✉️</span>
+              <span class="nav-label">연락(Contact)</span>
+            </a>
+          </li>
         </ul>
-        <a class="btn btn-outline-dark btn-sm" href="/admin/">관리(Admin)</a>
+        <a class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center gap-2" href="/admin/" title="관리(Admin)">
+          <span class="nav-emoji" aria-hidden="true">🛠️</span>
+          <span class="nav-label">관리(Admin)</span>
+        </a>
       </div>
     </div>
   </nav>

@@ -11,6 +11,10 @@
         {% endfor %}
       </div>
     </div>
-    <a class="btn btn-sm btn-outline-primary mt-auto" href="{{ project.link }}" target="_blank" rel="noopener">링크(Link)</a>
+    {% if project.link %}
+      <a class="btn btn-sm btn-outline-primary mt-auto" href="{{ project.link }}" target="_blank" rel="noopener">링크(Link)</a>
+    {% else %}
+      <div class="mt-auto small text-secondary">링크 준비중</div>
+    {% endif %}
   </div>
 </div>

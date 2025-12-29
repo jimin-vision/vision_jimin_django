@@ -9,22 +9,16 @@
 
 PROJECTS = [
     {
-        "name": "포트폴리오 웹(Portfolio Web)",
-        "summary": "홈(Home), 프로젝트(Projects), 연락(Contact) 동선을 갖춘 개인 사이트.",
-        "tech_stack": ["Django", "Bootstrap", "SQLite"],
-        "link": "https://example.com",
+        "name": "스마트팜 모니터링/제어 WebApp (AnyGrow II)",
+        "summary": "센서(온도/습도/CO2/조도) 데이터를 시각화하고 조명 제어를 지원한 팀 프로젝트.",
+        "tech_stack": ["Node.js", "Socket.IO", "SerialPort", "jQuery Mobile", "HTML/CSS", "JavaScript"],
+        "link": "",
     },
     {
-        "name": "블로그 기록 시스템(Blog Log System)",
-        "summary": "관리자(Admin)에서 글을 작성하고 목록(List)으로 보여주는 블로그.",
-        "tech_stack": ["Django", "템플릿(Templates)"],
-        "link": "https://example.com",
-    },
-    {
-        "name": "프로젝트 카드 UI(Project Card UI)",
-        "summary": "카드(Card) 레이아웃으로 핵심 정보를 빠르게 스캔.",
-        "tech_stack": ["Bootstrap", "HTML"],
-        "link": "https://example.com",
+        "name": "피그마 앱 UI/UX 팀프로젝트",
+        "summary": "Figma로 앱 화면 흐름과 프로토타입을 설계한 팀 프로젝트.",
+        "tech_stack": ["Figma", "UI/UX", "프로토타이핑"],
+        "link": "",
     },
 ]
 
