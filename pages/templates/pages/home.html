@@ -49,6 +49,61 @@
   </div>
 </section>
 
+<section class="mb-5">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="surface p-4 h-100">
+        <h2 class="h5 fw-bold mb-3">언어(Language) 사용 비중</h2>
+        {% if language_usage %}
+          <div class="d-grid gap-3">
+            {% for item in language_usage %}
+              <div>
+                <div class="d-flex justify-content-between small mb-2">
+                  <span class="fw-semibold">{{ item.label }}</span>
+                  <span class="text-secondary">{{ item.percent }}%</span>
+                </div>
+                <div class="chart-track">
+                  <div class="chart-fill accent" style="width: {{ item.percent }}%"></div>
+                </div>
+                {% if item.note %}
+                  <div class="small text-secondary mt-1">{{ item.note }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="surface p-4 h-100">
+        <h2 class="h5 fw-bold mb-3">작업(Work) 비중</h2>
+        {% if work_usage %}
+          <div class="d-grid gap-3">
+            {% for item in work_usage %}
+              <div>
+                <div class="d-flex justify-content-between small mb-2">
+                  <span class="fw-semibold">{{ item.label }}</span>
+                  <span class="text-secondary">{{ item.percent }}%</span>
+                </div>
+                <div class="chart-track">
+                  <div class="chart-fill accent-2" style="width: {{ item.percent }}%"></div>
+                </div>
+                {% if item.note %}
+                  <div class="small text-secondary mt-1">{{ item.note }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="surface p-4 p-md-5">
   <div class="row g-3 align-items-center">
     <div class="col-md-8">
