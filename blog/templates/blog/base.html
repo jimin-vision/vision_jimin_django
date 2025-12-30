@@ -163,10 +163,23 @@
             </a>
           </li>
         </ul>
-        <a class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center gap-2" href="{% url 'manage_post_list' %}" title="관리(Manage)">
-          <span class="nav-emoji" aria-hidden="true">🛠️</span>
-          <span class="nav-label">관리(Manage)</span>
+        {% if request.user.is_authenticated %}
+        <div class="d-flex align-items-center gap-2">
+          <a class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center gap-2" href="{% url 'manage_post_list' %}" title="내 정보">
+            <span class="nav-label">내 정보</span>
+          </a>
+          <form class="m-0" method="post" action="{% url 'manage_logout' %}">
+            {% csrf_token %}
+            <button class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center gap-2" type="submit">
+              <span class="nav-label">로그아웃</span>
+            </button>
+          </form>
+        </div>
+        {% else %}
+        <a class="btn btn-outline-dark btn-sm d-flex align-items-center justify-content-center gap-2" href="{% url 'manage_login' %}?next={{ request.get_full_path|urlencode }}" title="로그인">
+          <span class="nav-label">로그인</span>
         </a>
+        {% endif %}
       </div>
     </div>
   </nav>

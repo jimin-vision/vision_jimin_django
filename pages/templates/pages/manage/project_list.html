@@ -3,11 +3,6 @@
 {% block manage_actions %}
   <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
   <a class="btn btn-primary" href="{% url 'manage_project_create' %}">새 프로젝트</a>
-  <form method="post" action="{% url 'manage_logout' %}">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="/">
-    <button class="btn btn-outline-dark" type="submit">로그아웃</button>
-  </form>
 {% endblock %}
 
 {% block manage_content %}
