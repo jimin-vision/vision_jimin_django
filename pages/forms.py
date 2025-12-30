@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Project
+from .models import Profile, Project
 
 
 def _split_lines(value):
@@ -97,13 +97,13 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["usage_type"].choices = [
-            ("", "선택 안 함"),
+            ("", "선택 안함"),
             (Project.USAGE_LANGUAGE, "언어"),
             (Project.USAGE_TOOL, "도구"),
             (Project.USAGE_OTHER, "기타"),
         ]
         self.fields["order"].required = False
-        self.fields["order"].help_text = "비워두면 자동으로 마지막 순서에 추가됩니다."
+        self.fields["order"].help_text = "비워두면 마지막 순서로 추가됩니다."
 
         if self.instance.pk:
             self.fields["tech_stack_text"].initial = "\n".join(self.instance.tech_stack or [])
@@ -131,3 +131,44 @@ class ProjectForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = [
+            "name",
+            "headline",
+            "summary",
+            "email",
+            "github",
+            "resume",
+            "focus_language",
+            "focus_interest",
+            "focus_goal",
+        ]
+        labels = {
+            "name": "이름",
+            "headline": "한 줄 소개",
+            "summary": "소개 요약",
+            "email": "이메일",
+            "github": "깃헙",
+            "resume": "이력서 링크",
+            "focus_language": "사용 언어",
+            "focus_interest": "좋아하는 것",
+            "focus_goal": "목표",
+        }
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "headline": forms.TextInput(attrs={"class": "form-control"}),
+            "summary": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "github": forms.TextInput(attrs={"class": "form-control"}),
+            "resume": forms.URLInput(attrs={"class": "form-control", "placeholder": "https://"}),
+            "focus_language": forms.TextInput(attrs={"class": "form-control"}),
+            "focus_interest": forms.TextInput(attrs={"class": "form-control"}),
+            "focus_goal": forms.TextInput(attrs={"class": "form-control"}),
+        }
+        help_texts = {
+            "github": "전체 URL 또는 사용자명을 입력하세요.",
+        }

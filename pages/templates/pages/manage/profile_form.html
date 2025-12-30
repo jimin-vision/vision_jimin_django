@@ -1,0 +1,99 @@
+{% extends "blog/manage/base.html" %}
+
+{% block manage_actions %}
+  <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+  <button class="btn btn-primary" type="submit" form="profile-form">저장</button>
+{% endblock %}
+
+{% block manage_content %}
+<form id="profile-form" class="surface p-4" method="post">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+  {% endif %}
+
+  <div class="mb-4">
+    <h2 class="h6 fw-bold mb-3">기본 정보</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.headline.id_for_label }}">{{ form.headline.label }}</label>
+        {{ form.headline }}
+        {% if form.headline.errors %}
+          <div class="text-danger small mt-1">{{ form.headline.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.summary.id_for_label }}">{{ form.summary.label }}</label>
+        {{ form.summary }}
+        {% if form.summary.errors %}
+          <div class="text-danger small mt-1">{{ form.summary.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <h2 class="h6 fw-bold mb-3">연락 정보</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.github.id_for_label }}">{{ form.github.label }}</label>
+        {{ form.github }}
+        {% if form.github.help_text %}
+          <div class="form-text">{{ form.github.help_text }}</div>
+        {% endif %}
+        {% if form.github.errors %}
+          <div class="text-danger small mt-1">{{ form.github.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.resume.id_for_label }}">{{ form.resume.label }}</label>
+        {{ form.resume }}
+        {% if form.resume.errors %}
+          <div class="text-danger small mt-1">{{ form.resume.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="h6 fw-bold mb-3">소개 카드</h2>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.focus_language.id_for_label }}">{{ form.focus_language.label }}</label>
+        {{ form.focus_language }}
+        {% if form.focus_language.errors %}
+          <div class="text-danger small mt-1">{{ form.focus_language.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.focus_interest.id_for_label }}">{{ form.focus_interest.label }}</label>
+        {{ form.focus_interest }}
+        {% if form.focus_interest.errors %}
+          <div class="text-danger small mt-1">{{ form.focus_interest.errors }}</div>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.focus_goal.id_for_label }}">{{ form.focus_goal.label }}</label>
+        {{ form.focus_goal }}
+        {% if form.focus_goal.errors %}
+          <div class="text-danger small mt-1">{{ form.focus_goal.errors }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

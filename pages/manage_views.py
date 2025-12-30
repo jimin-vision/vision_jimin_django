@@ -3,8 +3,25 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ProjectForm
-from .models import Project
+from .forms import ProfileForm, ProjectForm
+from .models import Profile, Project
+
+
+@login_required
+def manage_profile_edit(request):
+    profile, _ = Profile.objects.get_or_create(
+        user=request.user,
+        defaults={"name": request.user.get_full_name() or request.user.username},
+    )
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "소개/연락 정보가 저장되었습니다.")
+            return redirect("manage_profile_edit")
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, "pages/manage/profile_form.html", {"form": form})
 
 
 @login_required

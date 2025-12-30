@@ -39,3 +39,24 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="profile",
+    )
+    name = models.CharField(max_length=100, blank=True)
+    headline = models.CharField(max_length=200, blank=True)
+    summary = models.TextField(blank=True)
+    email = models.EmailField(blank=True)
+    github = models.CharField(max_length=200, blank=True)
+    resume = models.URLField(blank=True)
+    focus_language = models.CharField(max_length=200, blank=True)
+    focus_interest = models.CharField(max_length=200, blank=True)
+    focus_goal = models.CharField(max_length=200, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name or self.user.username

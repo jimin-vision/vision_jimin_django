@@ -1,16 +1,15 @@
 from django.shortcuts import render
 
-from .data import PROFILE, WORK_USAGE
-from .models import Project
+from .models import Profile, Project
 
 
-def _aggregate_language_usage(projects):
+def _aggregate_usage(projects, target_type):
     totals = {}
     for project in projects:
         usage_type = getattr(project, "usage_type", None)
         if usage_type is None and isinstance(project, dict):
             usage_type = project.get("usage_type")
-        if usage_type != "language":
+        if usage_type != target_type:
             continue
 
         usage_items = getattr(project, "usage_items", None)
@@ -44,45 +43,67 @@ def _get_projects(user):
     return list(Project.objects.filter(owner=user))
 
 
-def _build_profile():
-    profile = PROFILE.copy()
-    email = profile.get("email", "")
-    profile["email_link"] = f"mailto:{email}" if email else ""
+def _serialize_profile(profile):
+    data = {
+        "name": profile.name or profile.user.get_full_name() or profile.user.username,
+        "headline": profile.headline,
+        "summary": profile.summary,
+        "email": profile.email,
+        "github": profile.github,
+        "resume": profile.resume,
+        "focus_language": profile.focus_language,
+        "focus_interest": profile.focus_interest,
+        "focus_goal": profile.focus_goal,
+    }
 
-    github = profile.get("github", "")
+    email = data.get("email", "")
+    data["email_link"] = f"mailto:{email}" if email else ""
+
+    github = data.get("github", "")
     if github and not github.startswith(("http://", "https://")):
-        profile["github_link"] = f"https://github.com/{github}"
+        data["github_link"] = f"https://github.com/{github}"
     else:
-        profile["github_link"] = github
+        data["github_link"] = github
 
-    profile["resume_link"] = profile.get("resume", "")
-    return profile
+    data["resume_link"] = data.get("resume", "")
+    return data
+
+
+def _get_profile(user):
+    if not user.is_authenticated:
+        return {}
+    profile, _ = Profile.objects.get_or_create(
+        user=user,
+        defaults={"name": user.get_full_name() or user.username},
+    )
+    return _serialize_profile(profile)
 
 
 def home(request):
-    profile = _build_profile()
+    profile = _get_profile(request.user)
     projects = _get_projects(request.user)
-    language_usage = _aggregate_language_usage(projects)
+    language_usage = _aggregate_usage(projects, Project.USAGE_LANGUAGE)
+    work_usage = _aggregate_usage(projects, Project.USAGE_TOOL)
     context = {
         "profile": profile,
         "projects": projects,
         "language_usage": language_usage,
-        "work_usage": WORK_USAGE,
+        "work_usage": work_usage,
     }
     return render(request, "pages/home.html", context)
 
 
 def projects(request):
-    profile = _build_profile()
+    profile = _get_profile(request.user)
     projects = _get_projects(request.user)
     return render(request, "pages/projects.html", {"profile": profile, "projects": projects})
 
 
 def about(request):
-    profile = _build_profile()
+    profile = _get_profile(request.user)
     return render(request, "pages/about.html", {"profile": profile})
 
 
 def contact(request):
-    profile = _build_profile()
+    profile = _get_profile(request.user)
     return render(request, "pages/contact.html", {"profile": profile})

@@ -2,6 +2,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from . import views
+from pages import manage_views as pages_manage_views
 from .forms import ManageLoginForm
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     ),
     path("signup/", views.manage_signup, name="manage_signup"),
     path("logout/", views.manage_logout, name="manage_logout"),
+    path("profile/", pages_manage_views.manage_profile_edit, name="manage_profile_edit"),
     path("", views.manage_post_list, name="manage_post_list"),
     path("new/", views.manage_post_create, name="manage_post_create"),
     path("<int:pk>/edit/", views.manage_post_edit, name="manage_post_edit"),

@@ -13,9 +13,9 @@
     <div class="col-lg-7">
       <div class="surface p-4 h-100">
         <h2 class="h5 fw-bold mb-3">한 줄 소개(Headline)</h2>
-        <p class="mb-4">{{ profile.headline }}</p>
+        <p class="mb-4">{{ profile.headline|default:"준비중" }}</p>
         <h3 class="h6 fw-bold">요약(Summary)</h3>
-        <p class="text-secondary mb-0">{{ profile.summary }}</p>
+        <p class="text-secondary mb-0">{{ profile.summary|default:"소개 내용을 입력해 주세요." }}</p>
       </div>
     </div>
     <div class="col-lg-5">
@@ -24,15 +24,15 @@
         <div class="d-grid gap-2">
           <div class="p-3 border rounded-4 bg-white">
             <div class="fw-semibold">사용 언어</div>
-            <div class="small text-secondary">C, Python, Java</div>
+            <div class="small text-secondary">{{ profile.focus_language|default:"준비중" }}</div>
           </div>
           <div class="p-3 border rounded-4 bg-white">
             <div class="fw-semibold">좋아하는 것</div>
-            <div class="small text-secondary">게임, 음악감상</div>
+            <div class="small text-secondary">{{ profile.focus_interest|default:"준비중" }}</div>
           </div>
           <div class="p-3 border rounded-4 bg-white">
             <div class="fw-semibold">목표</div>
-            <div class="small text-secondary">백엔드 개발자</div>
+            <div class="small text-secondary">{{ profile.focus_goal|default:"준비중" }}</div>
           </div>
         </div>
       </div>
