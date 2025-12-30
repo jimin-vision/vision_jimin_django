@@ -1,0 +1,55 @@
+{% extends "blog/base.html" %}
+{% block title %}관리(Manage) - 포트폴리오(Portfolio){% endblock %}
+
+{% block extra_head %}
+<style>
+  .status-badge {
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+  .status-published {
+    background: rgba(14, 165, 233, 0.12);
+    color: #0284c7;
+  }
+  .status-draft {
+    background: rgba(100, 116, 139, 0.12);
+    color: #475569;
+  }
+  .manage-actions form {
+    margin: 0;
+  }
+  .manage-card + .manage-card {
+    margin-top: 16px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="mb-4 fade-up">
+  <span class="badge text-bg-light border mb-2">Manage</span>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+    <div>
+      <h1 class="h3 fw-bold mb-1">콘텐츠 관리</h1>
+      <p class="text-secondary mb-0">블로그 글을 작성하고 공개 상태를 관리합니다.</p>
+      <div class="small text-secondary mt-2">로그인: {{ request.user.username }}</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+      <a class="btn btn-primary" href="{% url 'manage_post_create' %}">새 글</a>
+      <a class="btn btn-outline-dark" href="{% url 'manage_logout' %}">로그아웃</a>
+    </div>
+  </div>
+</section>
+
+{% if messages %}
+  <div class="mb-4">
+    {% for message in messages %}
+      <div class="alert alert-info mb-2">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block manage_content %}{% endblock %}
+{% endblock %}

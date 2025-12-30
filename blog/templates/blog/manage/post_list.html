@@ -1,0 +1,114 @@
+{% extends "blog/manage/base.html" %}
+
+{% block manage_content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="surface p-3">
+      <div class="text-secondary small">전체</div>
+      <div class="h4 fw-bold mb-0">{{ total_count }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="surface p-3">
+      <div class="text-secondary small">공개</div>
+      <div class="h4 fw-bold mb-0">{{ published_count }}</div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="surface p-3">
+      <div class="text-secondary small">초안</div>
+      <div class="h4 fw-bold mb-0">{{ draft_count }}</div>
+    </div>
+  </div>
+</div>
+
+<form class="surface p-3 mb-4" method="get">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-6">
+      <label class="form-label">검색</label>
+      <input class="form-control" type="search" name="q" placeholder="제목 또는 내용 검색" value="{{ query }}">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">상태</label>
+      <select class="form-select" name="status">
+        <option value="all" {% if status == "all" %}selected{% endif %}>전체</option>
+        <option value="published" {% if status == "published" %}selected{% endif %}>공개</option>
+        <option value="draft" {% if status == "draft" %}selected{% endif %}>초안</option>
+      </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+      <button class="btn btn-primary w-100" type="submit">필터</button>
+      <a class="btn btn-outline-secondary w-100" href="{% url 'manage_post_list' %}">초기화</a>
+    </div>
+  </div>
+</form>
+
+{% for post in posts %}
+  <div class="surface p-4 manage-card">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          {% if post.status == "published" %}
+            <span class="status-badge status-published">공개</span>
+          {% else %}
+            <span class="status-badge status-draft">초안</span>
+          {% endif %}
+          <span class="small text-secondary">작성 {{ post.created_at|date:"Y-m-d H:i" }}</span>
+          {% if post.updated_at %}
+            <span class="small text-secondary">· 수정 {{ post.updated_at|date:"Y-m-d H:i" }}</span>
+          {% endif %}
+        </div>
+        <h2 class="h5 fw-bold mb-2">{{ post.title }}</h2>
+        <p class="text-secondary mb-0">{{ post.content|truncatechars:140 }}</p>
+      </div>
+      <div class="manage-actions d-flex flex-wrap gap-2 align-items-start">
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'manage_post_edit' post.pk %}">수정</a>
+        <form method="post" action="{% url 'manage_post_toggle' post.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          {% if post.status == "published" %}
+            <button class="btn btn-outline-secondary btn-sm" type="submit">비공개</button>
+          {% else %}
+            <button class="btn btn-primary btn-sm" type="submit">공개</button>
+          {% endif %}
+        </form>
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'manage_post_delete' post.pk %}">삭제</a>
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="alert alert-light border">글이 없습니다. 새 글을 작성해 주세요.</div>
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+  <nav class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.previous_page_number }}">이전</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">이전</span></li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ num }}">{{ num }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?{% if query_string %}{{ query_string }}&{% endif %}page={{ page_obj.next_page_number }}">다음</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><span class="page-link">다음</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}
+{% endblock %}
