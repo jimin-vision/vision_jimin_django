@@ -1,14 +1,25 @@
 from django.shortcuts import render
-from .data import PROFILE, PROJECTS, LANGUAGE_USAGE, WORK_USAGE
+
+from .data import PROFILE, WORK_USAGE
+from .models import Project
+
 
 def _aggregate_language_usage(projects):
     totals = {}
     for project in projects:
-        if project.get("usage_type") != "language":
+        usage_type = getattr(project, "usage_type", None)
+        if usage_type is None and isinstance(project, dict):
+            usage_type = project.get("usage_type")
+        if usage_type != "language":
             continue
-        for item in project.get("usage_items", []):
-            label = item.get("label")
-            percent = item.get("percent")
+
+        usage_items = getattr(project, "usage_items", None)
+        if usage_items is None and isinstance(project, dict):
+            usage_items = project.get("usage_items", [])
+
+        for item in usage_items or []:
+            label = item.get("label") if isinstance(item, dict) else None
+            percent = item.get("percent") if isinstance(item, dict) else None
             if not label or percent is None:
                 continue
             totals[label] = totals.get(label, 0) + float(percent)
@@ -26,6 +37,11 @@ def _aggregate_language_usage(projects):
         usage[-1]["percent"] = max(0, usage[-1]["percent"] + diff)
     return usage
 
+
+def _get_projects(user):
+    if not user.is_authenticated:
+        return []
+    return list(Project.objects.filter(owner=user))
 
 
 def _build_profile():
@@ -45,12 +61,11 @@ def _build_profile():
 
 def home(request):
     profile = _build_profile()
-    language_usage = _aggregate_language_usage(PROJECTS)
-    if not language_usage:
-        language_usage = LANGUAGE_USAGE
+    projects = _get_projects(request.user)
+    language_usage = _aggregate_language_usage(projects)
     context = {
         "profile": profile,
-        "projects": PROJECTS,
+        "projects": projects,
         "language_usage": language_usage,
         "work_usage": WORK_USAGE,
     }
@@ -59,7 +74,8 @@ def home(request):
 
 def projects(request):
     profile = _build_profile()
-    return render(request, "pages/projects.html", {"profile": profile, "projects": PROJECTS})
+    projects = _get_projects(request.user)
+    return render(request, "pages/projects.html", {"profile": profile, "projects": projects})
 
 
 def about(request):

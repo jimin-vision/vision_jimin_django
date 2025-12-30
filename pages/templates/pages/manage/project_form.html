@@ -1,0 +1,117 @@
+{% extends "blog/manage/base.html" %}
+
+{% block manage_actions %}
+  <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+  <a class="btn btn-primary" href="{% url 'manage_project_create' %}">새 프로젝트</a>
+  <form method="post" action="{% url 'manage_logout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="/">
+    <button class="btn btn-outline-dark" type="submit">로그아웃</button>
+  </form>
+{% endblock %}
+
+{% block manage_content %}
+<div class="surface p-4">
+  <h2 class="h5 fw-bold mb-3">{% if is_edit %}프로젝트 수정{% else %}새 프로젝트 작성{% endif %}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+      {{ form.name }}
+      {% if form.name.errors %}
+        <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.summary.id_for_label }}">{{ form.summary.label }}</label>
+      {{ form.summary }}
+      {% if form.summary.errors %}
+        <div class="text-danger small mt-1">{{ form.summary.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.link.id_for_label }}">{{ form.link.label }}</label>
+      {{ form.link }}
+      {% if form.link.errors %}
+        <div class="text-danger small mt-1">{{ form.link.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.order.id_for_label }}">{{ form.order.label }}</label>
+      {{ form.order }}
+      {% if form.order.help_text %}
+        <div class="form-text">{{ form.order.help_text }}</div>
+      {% endif %}
+      {% if form.order.errors %}
+        <div class="text-danger small mt-1">{{ form.order.errors }}</div>
+      {% endif %}
+    </div>
+
+    <hr class="my-4">
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.tech_stack_text.id_for_label }}">{{ form.tech_stack_text.label }}</label>
+      {{ form.tech_stack_text }}
+      {% if form.tech_stack_text.help_text %}
+        <div class="form-text">{{ form.tech_stack_text.help_text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.details_text.id_for_label }}">{{ form.details_text.label }}</label>
+      {{ form.details_text }}
+      {% if form.details_text.help_text %}
+        <div class="form-text">{{ form.details_text.help_text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.highlights_text.id_for_label }}">{{ form.highlights_text.label }}</label>
+      {{ form.highlights_text }}
+      {% if form.highlights_text.help_text %}
+        <div class="form-text">{{ form.highlights_text.help_text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.note.id_for_label }}">{{ form.note.label }}</label>
+      {{ form.note }}
+    </div>
+
+    <hr class="my-4">
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.usage_title.id_for_label }}">{{ form.usage_title.label }}</label>
+      {{ form.usage_title }}
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="{{ form.usage_type.id_for_label }}">{{ form.usage_type.label }}</label>
+      {{ form.usage_type }}
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label" for="{{ form.usage_items_text.id_for_label }}">{{ form.usage_items_text.label }}</label>
+      {{ form.usage_items_text }}
+      {% if form.usage_items_text.help_text %}
+        <div class="form-text">{{ form.usage_items_text.help_text }}</div>
+      {% endif %}
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-primary" type="submit">저장</button>
+      <a class="btn btn-outline-secondary" href="{% url 'manage_project_list' %}">목록으로</a>
+      {% if is_edit %}
+        <a class="btn btn-outline-danger" href="{% url 'manage_project_delete' project.pk %}">삭제</a>
+      {% endif %}
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Post
 
@@ -26,7 +27,7 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"].choices = [
-            (Post.STATUS_DRAFT, "비공개"),
+            (Post.STATUS_DRAFT, "초안"),
             (Post.STATUS_PUBLISHED, "공개"),
         ]
         if not self.instance.pk:
@@ -42,3 +43,26 @@ class ManageLoginForm(AuthenticationForm):
         label="비밀번호",
         widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "비밀번호"}),
     )
+
+
+class ManageSignupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ["username", "password1", "password2"]
+        labels = {
+            "username": "아이디",
+            "password1": "비밀번호",
+            "password2": "비밀번호 확인",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["username"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "아이디"}
+        )
+        self.fields["password1"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "비밀번호"}
+        )
+        self.fields["password2"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "비밀번호 확인"}
+        )

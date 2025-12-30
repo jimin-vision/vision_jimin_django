@@ -32,13 +32,23 @@
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
     <div>
       <h1 class="h3 fw-bold mb-1">콘텐츠 관리</h1>
-      <p class="text-secondary mb-0">블로그 글을 작성하고 공개 상태를 관리합니다.</p>
+      <p class="text-secondary mb-0">블로그 글과 프로젝트 정보를 관리합니다.</p>
       <div class="small text-secondary mt-2">로그인: {{ request.user.username }}</div>
+      <div class="d-flex flex-wrap gap-2 mt-3">
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'manage_post_list' %}">블로그 글</a>
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'manage_project_list' %}">프로젝트</a>
+      </div>
     </div>
     <div class="d-flex flex-wrap gap-2">
-      <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
-      <a class="btn btn-primary" href="{% url 'manage_post_create' %}">새 글</a>
-      <a class="btn btn-outline-dark" href="{% url 'manage_logout' %}">로그아웃</a>
+      {% block manage_actions %}
+        <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+        <a class="btn btn-primary" href="{% url 'manage_post_create' %}">새 글</a>
+        <form method="post" action="{% url 'manage_logout' %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="/">
+          <button class="btn btn-outline-dark" type="submit">로그아웃</button>
+        </form>
+      {% endblock %}
     </div>
   </div>
 </section>

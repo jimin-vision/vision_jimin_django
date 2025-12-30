@@ -1,0 +1,29 @@
+{% extends "blog/manage/base.html" %}
+
+{% block manage_actions %}
+  <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+  <a class="btn btn-primary" href="{% url 'manage_project_create' %}">새 프로젝트</a>
+  <form method="post" action="{% url 'manage_logout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="/">
+    <button class="btn btn-outline-dark" type="submit">로그아웃</button>
+  </form>
+{% endblock %}
+
+{% block manage_content %}
+<div class="surface p-4">
+  <h2 class="h5 fw-bold mb-3">삭제 확인</h2>
+  <p class="text-secondary mb-4">정말로 이 프로젝트를 삭제할까요? 삭제 후에는 복구할 수 없습니다.</p>
+  <div class="mb-4">
+    <div class="small text-secondary mb-1">대상 프로젝트</div>
+    <div class="fw-semibold">{{ project.name }}</div>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-danger" type="submit">삭제</button>
+      <a class="btn btn-outline-secondary" href="{% url 'manage_project_list' %}">취소</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

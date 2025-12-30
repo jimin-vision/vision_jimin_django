@@ -1,0 +1,68 @@
+{% extends "blog/manage/base.html" %}
+
+{% block manage_actions %}
+  <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
+  <a class="btn btn-primary" href="{% url 'manage_project_create' %}">새 프로젝트</a>
+  <form method="post" action="{% url 'manage_logout' %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="/">
+    <button class="btn btn-outline-dark" type="submit">로그아웃</button>
+  </form>
+{% endblock %}
+
+{% block manage_content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="surface p-3">
+      <div class="text-secondary small">전체 프로젝트</div>
+      <div class="h4 fw-bold mb-0">{{ total_count }}</div>
+    </div>
+  </div>
+</div>
+
+<form class="surface p-3 mb-4" method="get">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-8">
+      <label class="form-label">검색</label>
+      <input class="form-control" type="search" name="q" placeholder="프로젝트 이름 또는 요약 검색" value="{{ query }}">
+    </div>
+    <div class="col-md-4 d-flex gap-2">
+      <button class="btn btn-primary w-100" type="submit">검색</button>
+      <a class="btn btn-outline-secondary w-100" href="{% url 'manage_project_list' %}">초기화</a>
+    </div>
+  </div>
+</form>
+
+{% for project in projects %}
+  <div class="surface p-4 manage-card">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3">
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="small text-secondary">정렬 {{ project.order }}</span>
+          {% if project.usage_type %}
+            <span class="small text-secondary">
+              · 그래프
+              {% if project.usage_type == "language" %}
+                언어
+              {% elif project.usage_type == "tool" %}
+                도구
+              {% else %}
+                기타
+              {% endif %}
+            </span>
+          {% endif %}
+          <span class="small text-secondary">· 수정 {{ project.updated_at|date:"Y-m-d H:i" }}</span>
+        </div>
+        <h2 class="h5 fw-bold mb-2">{{ project.name }}</h2>
+        <p class="text-secondary mb-0">{{ project.summary|truncatechars:140 }}</p>
+      </div>
+      <div class="manage-actions d-flex flex-wrap gap-2 align-items-start">
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'manage_project_edit' project.pk %}">수정</a>
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'manage_project_delete' project.pk %}">삭제</a>
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="alert alert-light border">프로젝트가 없습니다. 새 프로젝트를 작성해 주세요.</div>
+{% endfor %}
+{% endblock %}

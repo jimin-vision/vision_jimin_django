@@ -38,7 +38,17 @@
     </div>
     {% if show_detail and project.usage_items %}
       <div class="mb-3">
-        <div class="small text-secondary mb-2">{{ project.usage_title }}</div>
+        <div class="small text-secondary mb-2">
+          {% if project.usage_title %}
+            {{ project.usage_title }}
+          {% elif project.usage_type == "tool" %}
+            도구 사용 비중
+          {% elif project.usage_type == "language" %}
+            언어 사용 비중
+          {% else %}
+            사용 비중
+          {% endif %}
+        </div>
         <div class="d-grid gap-3">
           {% for item in project.usage_items %}
             <div>

@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}
+{% block title %}관리 회원가입 - 포트폴리오(Portfolio){% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="surface p-4 p-md-5">
+      <span class="badge text-bg-light border mb-2">Manage</span>
+      <h1 class="h4 fw-bold mb-2">관리자 회원가입</h1>
+      <p class="text-secondary mb-4">계정을 만든 뒤 바로 관리 화면으로 이동합니다.</p>
+      <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+          {{ form.username }}
+          {% if form.username.errors %}
+            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+          {{ form.password1 }}
+          {% if form.password1.errors %}
+            <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+          {% endif %}
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+          {{ form.password2 }}
+          {% if form.password2.errors %}
+            <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+          {% endif %}
+        </div>
+        <button class="btn btn-primary w-100" type="submit">회원가입</button>
+      </form>
+      <div class="text-center small text-secondary mt-3">
+        이미 계정이 있나요? <a href="{% url 'manage_login' %}">로그인</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
