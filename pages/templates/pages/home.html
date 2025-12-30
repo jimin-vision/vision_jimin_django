@@ -11,10 +11,12 @@
       <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-primary btn-lg" href="{% url 'projects' %}">프로젝트(Projects)</a>
         <a class="btn btn-outline-secondary btn-lg" href="{% url 'contact' %}">연락(Contact)</a>
-        {% if profile.resume_link %}
-          <a class="btn btn-outline-dark btn-lg" href="{{ profile.resume_link }}" target="_blank" rel="noopener">이력서(Resume)</a>
-        {% else %}
-          <a class="btn btn-outline-dark btn-lg" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙(GitHub)</a>
+        {% if request.user.is_authenticated %}
+          {% if profile.resume_link %}
+            <a class="btn btn-outline-dark btn-lg" href="{{ profile.resume_link }}" target="_blank" rel="noopener">이력서(Resume)</a>
+          {% else %}
+            <a class="btn btn-outline-dark btn-lg" href="{{ profile.github_link }}" target="_blank" rel="noopener">깃헙(GitHub)</a>
+          {% endif %}
         {% endif %}
       </div>
     </div>
@@ -57,50 +59,58 @@
     <div class="col-lg-6">
       <div class="surface p-4 h-100">
         <h2 class="h5 fw-bold mb-3">언어(Language) 사용 비중</h2>
-        {% if language_usage %}
-          <div class="d-grid gap-3">
-            {% for item in language_usage %}
-              <div>
-                <div class="d-flex justify-content-between small mb-2">
-                  <span class="fw-semibold">{{ item.label }}</span>
-                  <span class="text-secondary">{{ item.percent }}%</span>
+        {% if request.user.is_authenticated %}
+          {% if language_usage %}
+            <div class="d-grid gap-3">
+              {% for item in language_usage %}
+                <div>
+                  <div class="d-flex justify-content-between small mb-2">
+                    <span class="fw-semibold">{{ item.label }}</span>
+                    <span class="text-secondary">{{ item.percent }}%</span>
+                  </div>
+                  <div class="chart-track">
+                    <div class="chart-fill accent" style="width: {{ item.percent }}%"></div>
+                  </div>
+                  {% if item.note %}
+                    <div class="small text-secondary mt-1">{{ item.note }}</div>
+                  {% endif %}
                 </div>
-                <div class="chart-track">
-                  <div class="chart-fill accent" style="width: {{ item.percent }}%"></div>
-                </div>
-                {% if item.note %}
-                  <div class="small text-secondary mt-1">{{ item.note }}</div>
-                {% endif %}
-              </div>
-            {% endfor %}
-          </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+          {% endif %}
         {% else %}
-          <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+          <div class="alert alert-light border">로그인 후 내 언어 비중을 확인할 수 있습니다.</div>
         {% endif %}
       </div>
     </div>
     <div class="col-lg-6">
       <div class="surface p-4 h-100">
         <h2 class="h5 fw-bold mb-3">작업 도구(Work Tools) 비중</h2>
-        {% if work_usage %}
-          <div class="d-grid gap-3">
-            {% for item in work_usage %}
-              <div>
-                <div class="d-flex justify-content-between small mb-2">
-                  <span class="fw-semibold">{{ item.label }}</span>
-                  <span class="text-secondary">{{ item.percent }}%</span>
+        {% if request.user.is_authenticated %}
+          {% if work_usage %}
+            <div class="d-grid gap-3">
+              {% for item in work_usage %}
+                <div>
+                  <div class="d-flex justify-content-between small mb-2">
+                    <span class="fw-semibold">{{ item.label }}</span>
+                    <span class="text-secondary">{{ item.percent }}%</span>
+                  </div>
+                  <div class="chart-track">
+                    <div class="chart-fill accent-2" style="width: {{ item.percent }}%"></div>
+                  </div>
+                  {% if item.note %}
+                    <div class="small text-secondary mt-1">{{ item.note }}</div>
+                  {% endif %}
                 </div>
-                <div class="chart-track">
-                  <div class="chart-fill accent-2" style="width: {{ item.percent }}%"></div>
-                </div>
-                {% if item.note %}
-                  <div class="small text-secondary mt-1">{{ item.note }}</div>
-                {% endif %}
-              </div>
-            {% endfor %}
-          </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+          {% endif %}
         {% else %}
-          <div class="alert alert-light border">데이터(Data)가 없습니다.</div>
+          <div class="alert alert-light border">로그인 후 내 작업 도구 비중을 확인할 수 있습니다.</div>
         {% endif %}
       </div>
     </div>

@@ -33,7 +33,7 @@
       <select class="form-select" name="status">
         <option value="all" {% if status == "all" %}selected{% endif %}>전체</option>
         <option value="published" {% if status == "published" %}selected{% endif %}>공개</option>
-        <option value="draft" {% if status == "draft" %}selected{% endif %}>초안</option>
+        <option value="draft" {% if status == "draft" %}selected{% endif %}>비공개</option>
       </select>
     </div>
     <div class="col-md-3 d-flex gap-2">

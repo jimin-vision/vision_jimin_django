@@ -27,7 +27,7 @@ class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"].choices = [
-            (Post.STATUS_DRAFT, "초안"),
+            (Post.STATUS_DRAFT, "비공개"),
             (Post.STATUS_PUBLISHED, "공개"),
         ]
         if not self.instance.pk:
