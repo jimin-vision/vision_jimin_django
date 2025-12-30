@@ -17,6 +17,12 @@ PROJECTS = [
             "인터랙션 동선을 연결해 개발 전에 흐름을 검증했습니다. 반복되는 요소는 "
             "정리해 구현 단계에서 혼선을 줄였습니다."
         ),
+        "usage_title": "도구 사용 비중",
+        "usage_type": "tool",
+        "usage_items": [
+            {"label": "Figma", "percent": 75},
+            {"label": "Canva", "percent": 25},
+        ],
         "details": [
             "요구사항을 기준으로 화면 목록과 사용자 흐름을 정리.",
             "대시보드/제어/예약/설정 화면 중심으로 와이어프레임 구성.",
@@ -42,6 +48,13 @@ PROJECTS = [
             "버튼/예약 입력 기반 제어 패킷을 구성해 보드로 전송하며 QThread/QTimer로 "
             "실시간 처리를 분리했습니다."
         ),
+        "usage_title": "언어 사용 비중",
+        "usage_type": "language",
+        "usage_items": [
+            {"label": "Python", "percent": 70},
+            {"label": "C", "percent": 15},
+            {"label": "Java", "percent": 15},
+        ],
         "details": [
             "목적: 센서 -> 보드(AnyGrow2) -> 시리얼 통신 -> PC(Python GUI) 흐름으로 "
             "데이터를 모니터링하고, PC에서 보드로 제어 명령을 전송하는 스마트팜 통합 UI 제작.",

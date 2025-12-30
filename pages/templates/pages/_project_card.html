@@ -36,6 +36,27 @@
         {% endfor %}
       </div>
     </div>
+    {% if show_detail and project.usage_items %}
+      <div class="mb-3">
+        <div class="small text-secondary mb-2">{{ project.usage_title }}</div>
+        <div class="d-grid gap-3">
+          {% for item in project.usage_items %}
+            <div>
+              <div class="d-flex justify-content-between small mb-2">
+                <span class="fw-semibold">{{ item.label }}</span>
+                <span class="text-secondary">{{ item.percent }}%</span>
+              </div>
+              <div class="chart-track">
+                <div class="chart-fill accent" style="width: {{ item.percent }}%"></div>
+              </div>
+              {% if item.note %}
+                <div class="small text-secondary mt-1">{{ item.note }}</div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
     {% if project.link %}
       <a class="btn btn-sm btn-outline-primary mt-auto" href="{{ project.link }}" target="_blank" rel="noopener">링크(Link)</a>
     {% else %}

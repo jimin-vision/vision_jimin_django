@@ -1,5 +1,31 @@
-﻿from django.shortcuts import render
+from django.shortcuts import render
 from .data import PROFILE, PROJECTS, LANGUAGE_USAGE, WORK_USAGE
+
+def _aggregate_language_usage(projects):
+    totals = {}
+    for project in projects:
+        if project.get("usage_type") != "language":
+            continue
+        for item in project.get("usage_items", []):
+            label = item.get("label")
+            percent = item.get("percent")
+            if not label or percent is None:
+                continue
+            totals[label] = totals.get(label, 0) + float(percent)
+
+    total = sum(totals.values())
+    if total <= 0:
+        return []
+
+    usage = []
+    for label, value in totals.items():
+        usage.append({"label": label, "percent": round(value * 100 / total)})
+
+    diff = 100 - sum(item["percent"] for item in usage)
+    if usage:
+        usage[-1]["percent"] = max(0, usage[-1]["percent"] + diff)
+    return usage
+
 
 
 def _build_profile():
@@ -19,10 +45,13 @@ def _build_profile():
 
 def home(request):
     profile = _build_profile()
+    language_usage = _aggregate_language_usage(PROJECTS)
+    if not language_usage:
+        language_usage = LANGUAGE_USAGE
     context = {
         "profile": profile,
         "projects": PROJECTS,
-        "language_usage": LANGUAGE_USAGE,
+        "language_usage": language_usage,
         "work_usage": WORK_USAGE,
     }
     return render(request, "pages/home.html", context)
