@@ -1,10 +1,12 @@
 {% extends "blog/manage/base.html" %}
+{% block manage_title %}블로그 글 관리{% endblock %}
+{% block manage_description %}블로그 글을 작성하고 공개/비공개 상태를 관리합니다.{% endblock %}
 
 {% block manage_content %}
 <div class="row g-3 mb-4">
   <div class="col-md-4">
     <div class="surface p-3">
-      <div class="text-secondary small">전체</div>
+      <div class="text-secondary small">전체 글</div>
       <div class="h4 fw-bold mb-0">{{ total_count }}</div>
     </div>
   </div>
@@ -16,7 +18,7 @@
   </div>
   <div class="col-md-4">
     <div class="surface p-3">
-      <div class="text-secondary small">초안</div>
+      <div class="text-secondary small">비공개</div>
       <div class="h4 fw-bold mb-0">{{ draft_count }}</div>
     </div>
   </div>
@@ -26,7 +28,7 @@
   <div class="row g-2 align-items-end">
     <div class="col-md-6">
       <label class="form-label">검색</label>
-      <input class="form-control" type="search" name="q" placeholder="제목 또는 내용 검색" value="{{ query }}">
+      <input class="form-control" type="search" name="q" placeholder="제목/내용 검색" value="{{ query }}">
     </div>
     <div class="col-md-3">
       <label class="form-label">상태</label>
@@ -37,7 +39,7 @@
       </select>
     </div>
     <div class="col-md-3 d-flex gap-2">
-      <button class="btn btn-primary w-100" type="submit">필터</button>
+      <button class="btn btn-primary w-100" type="submit">검색</button>
       <a class="btn btn-outline-secondary w-100" href="{% url 'manage_post_list' %}">초기화</a>
     </div>
   </div>
@@ -51,7 +53,7 @@
           {% if post.status == "published" %}
             <span class="status-badge status-published">공개</span>
           {% else %}
-            <span class="status-badge status-draft">초안</span>
+            <span class="status-badge status-draft">비공개</span>
           {% endif %}
           <span class="small text-secondary">작성 {{ post.created_at|date:"Y-m-d H:i" }}</span>
           {% if post.updated_at %}
@@ -77,7 +79,7 @@
     </div>
   </div>
 {% empty %}
-  <div class="alert alert-light border">글이 없습니다. 새 글을 작성해 주세요.</div>
+  <div class="alert alert-light border">작성된 글이 없습니다. 새 글을 작성해 주세요.</div>
 {% endfor %}
 
 {% if page_obj.has_other_pages %}

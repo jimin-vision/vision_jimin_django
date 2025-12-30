@@ -1,11 +1,13 @@
 {% extends "blog/manage/base.html" %}
+{% block manage_title %}블로그 글 삭제{% endblock %}
+{% block manage_description %}삭제 전에 글 제목을 확인하세요.{% endblock %}
 
 {% block manage_content %}
 <div class="surface p-4">
   <h2 class="h5 fw-bold mb-3">삭제 확인</h2>
-  <p class="text-secondary mb-4">정말로 이 글을 삭제할까요? 삭제 후에는 복구할 수 없습니다.</p>
+  <p class="text-secondary mb-4">정말로 삭제할까요? 삭제 후에는 복구할 수 없습니다.</p>
   <div class="mb-4">
-    <div class="small text-secondary mb-1">대상 글</div>
+    <div class="small text-secondary mb-1">삭제할 글</div>
     <div class="fw-semibold">{{ post.title }}</div>
   </div>
   <form method="post">

@@ -1,4 +1,6 @@
 {% extends "blog/manage/base.html" %}
+{% block manage_title %}{% if is_edit %}블로그 글 수정{% else %}블로그 글 작성{% endif %}{% endblock %}
+{% block manage_description %}제목, 내용, 공개 상태를 입력합니다.{% endblock %}
 
 {% block manage_content %}
 <div class="surface p-4">

@@ -15,7 +15,7 @@
         <h2 class="h5 fw-bold mb-3">한 줄 소개(Headline)</h2>
         <p class="mb-4">{{ profile.headline|default:"준비중" }}</p>
         <h3 class="h6 fw-bold">요약(Summary)</h3>
-        <p class="text-secondary mb-0">{{ profile.summary|default:"소개 내용을 입력해 주세요." }}</p>
+        <p class="text-secondary mb-0">{{ profile.summary|default:"소개 내용을 입력해 주세요."|linebreaksbr }}</p>
       </div>
     </div>
     <div class="col-lg-5">

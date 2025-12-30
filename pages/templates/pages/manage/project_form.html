@@ -1,4 +1,6 @@
 {% extends "blog/manage/base.html" %}
+{% block manage_title %}{% if is_edit %}프로젝트 수정{% else %}프로젝트 등록{% endif %}{% endblock %}
+{% block manage_description %}프로젝트 설명과 그래프 정보를 입력합니다.{% endblock %}
 
 {% block manage_actions %}
   <a class="btn btn-outline-secondary" href="/admin/">Django Admin</a>
@@ -7,7 +9,7 @@
 
 {% block manage_content %}
 <div class="surface p-4">
-  <h2 class="h5 fw-bold mb-3">{% if is_edit %}프로젝트 수정{% else %}새 프로젝트 작성{% endif %}</h2>
+  <h2 class="h5 fw-bold mb-3">{% if is_edit %}프로젝트 수정{% else %}새 프로젝트 등록{% endif %}</h2>
   <form method="post">
     {% csrf_token %}
     {% if form.non_field_errors %}
